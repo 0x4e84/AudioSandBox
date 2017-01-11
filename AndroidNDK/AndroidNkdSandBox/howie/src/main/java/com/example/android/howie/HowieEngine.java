@@ -18,25 +18,50 @@
 package com.example.android.howie;
 
 import android.content.Context;
+import android.media.AudioFormat;
 import android.media.AudioManager;
+import android.media.AudioRecord;
+import android.util.Log;
 
 public class HowieEngine {
 
-    public static long init(Context ctx) {
+    private static final String TAG = HowieEngine.class.getSimpleName();
+
+    public static long init(Context context) {
         System.loadLibrary("howie");
 
         //Check for optimal output sample rate and buffer size
-        AudioManager am = (AudioManager) ctx.getSystemService(Context
-                .AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
-        String frameRate = am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
-        String framesPerBuffer = am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
+        String frameRate = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE);
+        String framesPerBuffer = audioManager.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER);
 
+        int bufferSize;
+        bufferSize = AudioRecord.getMinBufferSize(48000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        Log.d(TAG, String.format("init: MinBufferSize for 48000 Hz: %d samples", bufferSize/16));
+        bufferSize = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        Log.d(TAG, String.format("init: MinBufferSize for 44100 Hz: %d samples", bufferSize/16));
+        bufferSize = AudioRecord.getMinBufferSize(24000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        Log.d(TAG, String.format("init: MinBufferSize for 24000 Hz: %d samples", bufferSize/16));
+        bufferSize = AudioRecord.getMinBufferSize(22050, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        Log.d(TAG, String.format("init: MinBufferSize for 22050 Hz: %d samples", bufferSize/16));
         //Convert to ints
         int frameRateInt = Integer.parseInt(frameRate);
         int framesPerBufferInt = Integer.parseInt(framesPerBuffer);
-        return create(frameRateInt, 16, 2, 0xffff, false, 1, 1,
-                framesPerBufferInt);
+
+//        int frameRateInt = 48000;
+//        int framesPerBufferInt = 240;
+
+//        int frameRateInt = 44100;
+//        int framesPerBufferInt = 448;
+
+//        int frameRateInt = 24000;
+//        int framesPerBufferInt = 480;
+
+//        int frameRateInt = 22050;
+//        int framesPerBufferInt = 448;
+
+        return create(frameRateInt, 16, 2, 0xffff, false, 1, 1, framesPerBufferInt);
     }
 
     private static native long create(
