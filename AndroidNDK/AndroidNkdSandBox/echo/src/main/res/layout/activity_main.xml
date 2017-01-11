@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gmail.meeyeer.viinceent.echo.MainActivity">
+
+    <ToggleButton
+        android:id="@+id/toggleEcho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:layout_centerHorizontal="true"
+        android:textOff="Start Echo"
+        android:textOn="Stop Echo" />
+
+    <TextView
+        android:id="@+id/textViewAttenuation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toggleEcho"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="Attenuation: "/>
+
+    <SeekBar
+        android:id="@+id/seekBarAttenuation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_below="@id/textViewAttenuation"
+        android:max="100"
+        android:progress="50"/>
+
+    <TextView
+        android:id="@+id/textViewDelay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBarAttenuation"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="Delay: "/>
+
+    <SeekBar
+        android:id="@+id/seekBarDelay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_below="@id/textViewDelay"
+        android:max="100"
+        android:progress="20"/>
+
+    <TextView
+        android:id="@+id/textViewWetDryMix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekBarDelay"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="Wet/Dry Mix: "/>
+
+    <SeekBar
+        android:id="@+id/seekBarWetDryMix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWetDryMix"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:max="100"
+        android:progress="50"/>
+
+</RelativeLayout>
