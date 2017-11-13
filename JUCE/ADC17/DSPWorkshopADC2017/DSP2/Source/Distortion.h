@@ -30,14 +30,19 @@ public:
         auto& waveshaper = processorChain.template get<waveshaperIndex>();
         // <- 7.6. initialise the Waveshaper to a hard clipper, which limits the
         //         input signal to the [-0.1, 0.1] range
-        waveshaper.functionToUse = [](Type x) { return jlimit(Type(-.1), Type(.1), x); };
+        // waveshaper.functionToUse = [](Type x) { return jlimit(Type(-.1), Type(.1), x); };
 
         // <- 8.5. change the Waveshaper's transfer curve to hyperbolic tangent
+        waveshaper.functionToUse = [](Type x) { return std::tanh(x);  };
         // <- 8.6. get a reference to the pre-gain with processorChain.get<>()
+        auto& preGain = processorChain.template get<preGainIndex>();
         // <- 8.7. set the pre-gain to 30 dB
+        preGain.setGainDecibels(30.0f);
 
         // <- 8.8. get a reference to the post-gain with processorChain.get<>()
+        auto& postGain = processorChain.template get<postGainIndex>();
         // <- 8.9. set the post-gain to -20 dB
+        postGain.setGainDecibels(-20.0f);
 
         // <- 10.8. set the post-gain to 0 dB after the CabSimulator has 
         //          been integrated
@@ -82,9 +87,11 @@ private:
     {
         // <- 9.2. add Filter index
         // <- 8.3. add pre-gain index
+        preGainIndex,
         // <- 7.2. add Waveshaper index
         waveshaperIndex,
         // <- 8.4. add post-gain index
+        postGainIndex
     };
 
     using Filter = juce::dsp::IIR::Filter<Type>;
@@ -94,8 +101,10 @@ private:
         // <- 9.1. add a multi-channel IIR filter using juce::dsp::ProcessorDuplicator,
         //         Filter and FilterCoefs
         // <- 8.1. add a juce::dsp::Gain<Type>
+        juce::dsp::Gain<Type>,
         // <- 7.1. add a juce::dsp::WaveShaper
         juce::dsp::WaveShaper<Type>,
         // <- 8.2. add a juce::dsp::Gain<Type>
+        juce::dsp::Gain<Type>
     > processorChain;
 };
