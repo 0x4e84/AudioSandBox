@@ -136,22 +136,23 @@ public:
             for (size_t i = 0; i < numSamples; ++i)
             {
                     // <- 12.1. get the delayed sample from the delay line
-
+                auto delayedSample = dline.get(delayTime);
                     // <- 13.1. apply the filter to the delay line output
 
                     // <- 12.2. get the current input sample from input
-
+                const auto inputSample = input[i];
                     // <- 12.3. calculate the sample to be pushed to the delay line
                     //          by mixing the input sample with the delay line output
                     //          weighted with the feedback parameter
-
+                const auto delayLineInputSample = inputSample + feedback * delayedSample;
                     // <- 12.4. push the above sample to the delay line
-
+                dline.push(delayLineInputSample);
                     // <- 12.5. calculate the output sample by mixing the input sample
                     //          with the delay line output weighted with the wetLevel
                     //          parameter
-
+                const auto outputSample = inputSample + wetLevel * delayedSample;
                     // <- 12.6. store the output sample to output
+                output[i] = outputSample;
             }
         }
     }
