@@ -34,8 +34,9 @@ public:
         ignoreUnused (delayInSamples);
 
         // <- 11.3. calculate the index of the delayed sample (for delayInSamples == 0 this should be the index of the most recent sample)
+        const auto index = (leastRecentIndex + 1 + delayInSamples) % size();
         // <- 11.4. return the delayed sample
-        return Type (0);
+        return rawData[index];
     }
 
     /** Set the specified sample in the delay line */
@@ -46,7 +47,9 @@ public:
         ignoreUnused (newValue);
 
         // <- 11.5. calculate the index of the sample at the specified position
+        const auto index = (leastRecentIndex + 1 + delayInSamples) % size();
         // <- 11.6. overwrite the specified sample in the delay line with newValue
+        rawData[index] = newValue;
     }
 
     /** Adds a new value to the delay line, overwriting the least recently added sample */
@@ -55,7 +58,9 @@ public:
         ignoreUnused (valueToAdd);
 
         // <- 11.1. overwrite the least recent element with the new value
+        rawData[leastRecentIndex] = valueToAdd;
         // <- 11.2. update leastRecentIndex
+        leastRecentIndex = leastRecentIndex == 0 ? size() - 1 : leastRecentIndex - 1;
     }
 
 private:
