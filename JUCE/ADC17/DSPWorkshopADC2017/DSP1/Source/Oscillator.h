@@ -29,9 +29,10 @@ public:
         // <- 1.10. get a reference to the Oscillator with processorChain.get<>()
         auto& oscillator = processorChain.template get<0>();
         // <- 1.11. initialise the Oscillator with a 128-point sine wave lookup table
-        oscillator.initialise([](Type x) { return std::sin(x); }, 128);
+        //oscillator.initialise([](Type x) { return std::sin(x); }, 128);
         // <- 2.1. initialise the Oscillator with a 2-point sawtooth wave (i.e. a
         //         linear ramp from -1 to 1) lookup table
+        oscillator.initialise([](Type x) { return jmap(x, Type(-double_Pi), Type(double_Pi), Type(-1), Type(1)); }, 2);
     }
 
     //==============================================================================
