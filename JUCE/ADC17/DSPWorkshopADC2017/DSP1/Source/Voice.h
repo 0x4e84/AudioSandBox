@@ -38,7 +38,9 @@ public:
         filter.setResonance(0.7f);
 
             // <- 5.2. initialise the lfo with a sine wave
+        lfo.initialise([](float x) { return std::sin(x); }, 128);
             // <- 5.3. change the lfo frequency to 3 Hz
+        lfo.setFrequency(3.0f);
     }
 
     //==============================================================================
@@ -48,6 +50,7 @@ public:
         processorChain.prepare (spec);
 
             // <- 5.4. set the sample rate of the lfo to spec.sampleRate / lfoUpdateRate
+        lfo.prepare({ spec.sampleRate / lfoUpdateRate, spec.maximumBlockSize, spec.numChannels });
     }
 
     //==============================================================================
@@ -94,6 +97,17 @@ public:
 
             // <- 5.6. use the output of lfo.processSample() to change the cutoff
             //         frequency of the filter between 100 Hz and 2 kHz
+        for (int i = 0; i < numSamples; ++i)
+        {
+            if (--lfoUpdateCounter == 0)
+            {
+                lfoUpdateCounter = lfoUpdateRate;
+                const auto lfoOut = lfo.processSample(0.0f);
+
+                const auto cutoffFreqHz = jmap(lfoOut, -1.0f, 1.0f, 1e2f, 2e3f);
+                processorChain.get<filterIndex>().setCutoffFrequencyHz(cutoffFreqHz);
+            }
+        }
 
         auto block = tempBlock.getSubBlock (0, (size_t) numSamples);
         block.clear();
@@ -132,4 +146,5 @@ private:
     static constexpr size_t lfoUpdateRate = 100;
     size_t lfoUpdateCounter = lfoUpdateRate;
                         // <- 5.1. declare a juce::dsp::Oscillator named lfo
+    juce::dsp::Oscillator<float> lfo;
 };
