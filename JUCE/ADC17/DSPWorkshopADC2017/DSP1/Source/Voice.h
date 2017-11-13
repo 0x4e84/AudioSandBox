@@ -31,8 +31,11 @@ public:
         masterGain.setGainLinear (0.7f);
 
             // <- 4.3. get a reference to the filter with processorChain.get<>()
+        auto& filter = processorChain.get<filterIndex>();
             // <- 4.4. set the cutoff frequency of the filter to 1 kHz
+        filter.setCutoffFrequencyHz(1e3f);
             // <- 4.5. set the resonance of the filter to 0.7
+        filter.setResonance(0.7f);
 
             // <- 5.2. initialise the lfo with a sine wave
             // <- 5.3. change the lfo frequency to 3 Hz
@@ -113,6 +116,7 @@ private:
                         // <- 3.2. add index for the second Oscillator
         osc2Index,
                         // <- 4.2. add index for the Filter
+        filterIndex,
         masterGainIndex
     };
 
@@ -121,6 +125,7 @@ private:
                         // <- 3.1. add a second Oscillator
         Oscillator<float>,
         // <- 4.1. add a juce::dsp::LadderFilter
+        juce::dsp::LadderFilter<float>,
         juce::dsp::Gain<float>
     > processorChain;
 
