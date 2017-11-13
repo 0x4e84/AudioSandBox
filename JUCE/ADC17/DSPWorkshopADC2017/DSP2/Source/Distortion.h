@@ -33,7 +33,7 @@ public:
         // waveshaper.functionToUse = [](Type x) { return jlimit(Type(-.1), Type(.1), x); };
 
         // <- 8.5. change the Waveshaper's transfer curve to hyperbolic tangent
-        waveshaper.functionToUse = [](Type x) { return std::tanh(x);  };
+        waveshaper.functionToUse = [](Type x) { return std::tanh(x); };
         // <- 8.6. get a reference to the pre-gain with processorChain.get<>()
         auto& preGain = processorChain.template get<preGainIndex>();
         // <- 8.7. set the pre-gain to 30 dB
@@ -53,10 +53,12 @@ public:
     {
         // <- 9.3. get a reference to the filter ProcessorDuplicator with
         //         processorChain.get<>()
+        auto& filter = processorChain.template get<filterIndex>();
 
         // <- 9.4 assign a new set of coefficients to the ProcessorDuplicator's
         //        state using juce::dsp::IIR::Coefficients::makeFirstOrderHighPass();
         //        the cutoff frequency should be 1 kHz
+        filter.state = FilterCoefs::makeFirstOrderHighPass(spec.sampleRate, 1e3f);
 
         // <- 7.4. prepare the processorChain
         processorChain.prepare(spec);
@@ -86,6 +88,7 @@ private:
     enum
     {
         // <- 9.2. add Filter index
+        filterIndex,
         // <- 8.3. add pre-gain index
         preGainIndex,
         // <- 7.2. add Waveshaper index
@@ -100,6 +103,8 @@ private:
     juce::dsp::ProcessorChain<
         // <- 9.1. add a multi-channel IIR filter using juce::dsp::ProcessorDuplicator,
         //         Filter and FilterCoefs
+        // (that's required to work on a stereo signal)
+        juce::dsp::ProcessorDuplicator<Filter, FilterCoefs>,
         // <- 8.1. add a juce::dsp::Gain<Type>
         juce::dsp::Gain<Type>,
         // <- 7.1. add a juce::dsp::WaveShaper
