@@ -43,9 +43,10 @@ public:
         updateDelayLineSize();
         updateDelayTime();
 
-        filterCoefs = juce::dsp::IIR::Coefficients<Type>::makeFirstOrderLowPass (sampleRate, Type (1e3));
+        // filterCoefs = juce::dsp::IIR::Coefficients<Type>::makeFirstOrderLowPass (sampleRate, Type (1e3));
 
             // <- 13.2. replace the above low-pass filter with a high-pass filter
+        filterCoefs = juce::dsp::IIR::Coefficients<Type>::makeFirstOrderHighPass(sampleRate, Type(2e3));
 
         for (auto& f : filters)
         {
@@ -138,7 +139,7 @@ public:
                     // <- 12.1. get the delayed sample from the delay line
                 auto delayedSample = dline.get(delayTime);
                     // <- 13.1. apply the filter to the delay line output
-
+                delayedSample = filter.processSample(delayedSample);
                     // <- 12.2. get the current input sample from input
                 const auto inputSample = input[i];
                     // <- 12.3. calculate the sample to be pushed to the delay line
