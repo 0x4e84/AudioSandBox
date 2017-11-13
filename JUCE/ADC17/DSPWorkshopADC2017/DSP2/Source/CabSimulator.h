@@ -29,13 +29,16 @@ public:
     CabSimulator()
     {
             // <- 10.5. get a reference to the Convolution with processorChain.get<>()
+        auto& convolution = processorChain.template get<convolutionIndex>();
             // <- 10.6. load 1024 samples of the impulse response specified in the CabIR namespace
+        convolution.loadImpulseResponse(CabIR::IR_wav, CabIR::IR_wavSize, true, false, 1024);
     }
 
     //==============================================================================
     void prepare (const juce::dsp::ProcessSpec& spec)
     {
             // <- 10.4. prepare the processorChain
+        processorChain.prepare(spec);
 
         ignoreUnused (spec);
     }
@@ -45,6 +48,7 @@ public:
     void process (const ProcessContext& context) noexcept
     {
             // <- 10.7. process the processorChain with the given context
+        processorChain.process(context);
 
         ignoreUnused (context);
     }
@@ -53,16 +57,19 @@ public:
     void reset() noexcept
     {
             // <- 10.3. reset the processorChain
+        processorChain.reset();
     }
 
 private:
     //==============================================================================
-    // enum
-    // {
+    enum
+    {
             // <- 10.2. add Convolution index
-    // };
+        convolutionIndex
+    };
 
-    // juce::dsp::ProcessorChain<
+    juce::dsp::ProcessorChain<
             // <- 10.1. add juce::dsp::Convolution
-    // > processorChain;
+        juce::dsp::Convolution
+    > processorChain;
 };

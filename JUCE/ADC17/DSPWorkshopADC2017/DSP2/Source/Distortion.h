@@ -42,10 +42,11 @@ public:
         // <- 8.8. get a reference to the post-gain with processorChain.get<>()
         auto& postGain = processorChain.template get<postGainIndex>();
         // <- 8.9. set the post-gain to -20 dB
-        postGain.setGainDecibels(-20.0f);
+        // postGain.setGainDecibels(-20.0f);
 
         // <- 10.8. set the post-gain to 0 dB after the CabSimulator has 
         //          been integrated
+        postGain.setGainDecibels(0.0f);
     }
 
     //==============================================================================
