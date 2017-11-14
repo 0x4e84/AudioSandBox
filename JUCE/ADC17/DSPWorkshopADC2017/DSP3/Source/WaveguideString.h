@@ -147,23 +147,25 @@ private:
     Type processSample() noexcept
     {
             // <- 14.1. get the output of forwardDelayLine
+        auto forwardOut = forwardDelayLine.back();
             // <- 14.2. apply the filter to the output of forwardDelayLine
+        forwardOut = filter.processSample(forwardOut);
             // <- 14.3 multiply the filtered output of forwardDelayLine by decayCoef
-
+        forwardOut *= decayCoef;
             // <- 14.4. get the output of the backwardDelayLine
-
+        const auto backwardOut = backwardDelayLine.back();
             // <- 14.5. invert the filtered output of forwardDelayLine and push it
             //          to the backwardDelayLine
-
+        backwardDelayLine.push(-forwardOut);
             // <- 14.6. invert the output of backwardDelayLine and push it to the
             //          forwardDelayLine
-
+        forwardDelayLine.push(-backwardOut);
             // <- 14.7. calculate the output sample by adding the forwardDelayLine
             //          sample at forwardPickupIndex and the backwardDelayLine sample
             //          at backwardPickupIndex
-
+        const auto out = forwardDelayLine.get(forwardPickupIndex) + backwardDelayLine.get(backwardPickupIndex);
             // <- 14.8. return the output sample
-        return Type (0);
+        return out;
     }
 
     //==============================================================================

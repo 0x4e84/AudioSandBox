@@ -52,10 +52,13 @@ public:
 
         processorChain.get<osc1Index>().setLevel (velocity);
             // <- 14.11. bypass the oscillator
-
+        processorChain.get<osc1Index>().setLevel(0.0f);
             // <- 14.12. get a reference to the WaveguideString with processorChain.get<>()
+        auto& waveguideString = processorChain.get<stringIndex>();
             // <- 14.13. set the frequency of the WaveguideString
+        waveguideString.setFrequency(freqHz);
             // <- 14.14. trigger the WaveguideString
+        waveguideString.trigger(velocity);
     }
 
     //==============================================================================
@@ -121,12 +124,14 @@ private:
     {
         osc1Index,
                         // <- 14.10. add WaveguideString index
+        stringIndex,
         masterGainIndex
     };
 
     juce::dsp::ProcessorChain<
         Oscillator<float>,
                         // <- 14.9. add a WaveguideString
+        WaveguideString<float>,
         juce::dsp::Gain<float>
     > processorChain;
 };
