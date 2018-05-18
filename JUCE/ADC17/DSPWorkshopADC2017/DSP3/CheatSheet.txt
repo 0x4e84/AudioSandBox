@@ -20,7 +20,7 @@
 
 14.1. auto forwardOut = forwardDelayLine.back();
 14.2. forwardOut = filter.processSample (forwardOut);
-14.3 forwardOut *= decayCoef;
+14.3. forwardOut *= decayCoef;
 14.4. const auto backwardOut = backwardDelayLine.back();
 14.5. backwardDelayLine.push (-forwardOut);
 14.6. forwardDelayLine.push (-backwardOut);
