@@ -1,10 +1,18 @@
+ext {
+    // Sdk and tools
+    min_sdk_version = 21
+    target_sdk_version = 27
+    compile_sdk_version = 'android-P'
+}
+
 buildscript {
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha15'
+        classpath Libs.gradle_build_tools
+        classpath Libs.kotlin_plugin
     }
 }
 
