@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">OboeTemplate</string>
+    <string name="opengl_surface_view">OpenGL Surface View</string>
 </resources>
