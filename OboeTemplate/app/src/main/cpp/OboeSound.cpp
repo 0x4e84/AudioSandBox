@@ -1,7 +1,3 @@
-//
-// Created by 11vmeyer on 2018-05-20.
-//
-
 #include <thread>
 
 #include "OboeSound.h"
@@ -19,6 +15,7 @@ void OboeSound::start() {
 
     // Create a builder
     AudioStreamBuilder builder;
+    builder.setDirection(Direction::Output);
     builder.setFormat(AudioFormat::I16);
     builder.setChannelCount(2);
     builder.setSampleRate(kSampleRateHz);

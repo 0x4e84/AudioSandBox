@@ -12,12 +12,26 @@ std::unique_ptr<OboeSound> oboeSound;
 extern "C" {
 
 JNIEXPORT void JNICALL
-Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLTouchActivity_native_1onCreate(JNIEnv *env,
-                                                                                   jobject instance,
-                                                                                   jobject jAssetManager) {
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLTouchActivity_native_1createOboeTouchClap(
+        JNIEnv *env,
+        jobject instance,
+        jobject jAssetManager) {
     AAssetManager *assetManager = AAssetManager_fromJava(env, jAssetManager);
     oboeSound = std::make_unique<OboeSound>(assetManager);
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLTouchActivity_native_1startOboeSound(
+        JNIEnv *env,
+        jobject instance) {
     oboeSound->start();
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLTouchActivity_native_1stopOboeSound(
+        JNIEnv *env,
+        jobject instance) {
+    oboeSound->stop();
 }
 
 JNIEXPORT jstring JNICALL

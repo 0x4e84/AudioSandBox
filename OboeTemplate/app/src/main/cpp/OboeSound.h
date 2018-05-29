@@ -1,7 +1,3 @@
-//
-// Created by 11vmeyer on 2018-05-20.
-//
-
 #ifndef OBOETEMPLATE_OBOESOUND_H
 #define OBOETEMPLATE_OBOESOUND_H
 
