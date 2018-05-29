@@ -5,9 +5,11 @@
 #include <android/asset_manager_jni.h>
 
 #include "OboeSound.h"
+#include "StreamIn.h"
 
 static int32_t touchCounter = 0;
 std::unique_ptr<OboeSound> oboeSound;
+std::unique_ptr<StreamIn> streamIn;
 
 extern "C" {
 
@@ -32,6 +34,27 @@ Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLTouchActivity_native_1stopOb
         JNIEnv *env,
         jobject instance) {
     oboeSound->stop();
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1createStreamIn(
+        JNIEnv *env,
+        jobject instance) {
+    streamIn = std::make_unique<StreamIn>();
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1startStreamIn(
+        JNIEnv *env,
+        jobject instance) {
+    streamIn->start();
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1stopStreamIn(
+        JNIEnv *env,
+        jobject instance) {
+    streamIn->stop();
 }
 
 JNIEXPORT jstring JNICALL

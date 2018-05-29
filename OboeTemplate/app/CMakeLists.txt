@@ -21,6 +21,7 @@ add_library(# Sets the name of the library.
             # Provides a relative path to your source file(s).
             src/main/cpp/native-lib.cpp
             src/main/cpp/OboeSound.cpp
+            src/main/cpp/StreamIn.cpp
 
             # audio engine
             src/main/cpp/audio/SoundRecording.cpp

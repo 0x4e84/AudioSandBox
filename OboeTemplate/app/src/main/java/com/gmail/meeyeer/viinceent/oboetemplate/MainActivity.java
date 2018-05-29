@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button openGLButton = findViewById(R.id.button_opengl);
         openGLButton.setOnClickListener(this);
 
+        Button streamInButton = findViewById(R.id.button_stream_in);
+        streamInButton.setOnClickListener(this);
+
         // Example of a call to a native method
         tv = findViewById(R.id.sample_text);
     }
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.button_opengl:
                 startActivity(new Intent(this, OpenGLTouchActivity.class));
+                break;
+            case R.id.button_stream_in:
+                startActivity(new Intent(this, StreamInActivity.class));
                 break;
         }
     }
