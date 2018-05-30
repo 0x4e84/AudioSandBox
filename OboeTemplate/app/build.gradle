@@ -18,7 +18,7 @@ android {
 
                 // Instruction Set Architecture:
                 // armeabi-v7a: Nexus 5
-                // arm64-v8a: Nexus 5X, Nokia 6, Sony XPeria Z5 Compact
+                // arm64-v8a: Pixel 2, Nexus 5X, Nokia 6, Sony XPeria Z5 Compact
                 abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
