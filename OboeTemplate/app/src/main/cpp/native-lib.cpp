@@ -85,8 +85,9 @@ Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1createStr
 JNIEXPORT void JNICALL
 Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1startStreamIn(
         JNIEnv *env,
-        jobject instance) {
-    streamIn->start();
+        jobject instance,
+        jint deviceId) {
+    streamIn->start(deviceId);
 }
 
 JNIEXPORT void JNICALL
@@ -97,6 +98,10 @@ Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1stopStrea
 }
 
 JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_StreamInActivity_native_1closeStreamIn(
+        JNIEnv *env,
+        jobject instance) {
+    streamIn->close();
 }
 
 JNIEXPORT void JNICALL

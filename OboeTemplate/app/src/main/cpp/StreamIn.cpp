@@ -5,7 +5,7 @@
 StreamIn::StreamIn() {
 }
 
-void StreamIn::start() {
+void StreamIn::start(int32_t deviceId) {
     // Create a builder
     AudioStreamBuilder builder;
     builder.setDirection(Direction::Input);
@@ -15,6 +15,7 @@ void StreamIn::start() {
     builder.setCallback(this);
     builder.setPerformanceMode(PerformanceMode::LowLatency);
     builder.setSharingMode(SharingMode::Exclusive);
+    builder.setDeviceId(deviceId);
 
     Result result = builder.openStream(&mAudioStreamIn);
     if (result != Result::OK){
@@ -41,8 +42,15 @@ void StreamIn::stop() {
     }
 }
 
+void StreamIn::close() {
+    Result result = mAudioStreamIn->close();
+    if (result != Result::OK){
+        LOGE("Failed to close stream. Error: %s", convertToText(result));
+    }
+}
+
 DataCallbackResult
 StreamIn::onAudioReady(AudioStream *audioStream, void *audioData, int32_t numFrames) {
-    LOGD("Data coming in: %d frames", numFrames);
+    sampleCount += numFrames;
     return DataCallbackResult::Continue;
 }
