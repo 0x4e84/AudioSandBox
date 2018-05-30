@@ -14,21 +14,26 @@ public:
 
     void start();
     void stop();
+    void close();
     void onSurfaceCreated();
     void onSurfaceDestroyed();
     void onSurfaceChanged(int widthInPixels, int heightInPixels);
     void tick();
     void tap(int64_t eventTimeAsUptime);
+    bool isExclusive();
+    int64_t getBufferSizeInFrames();
 
     // Inherited from oboe::AudioStreamCallback
     DataCallbackResult
     onAudioReady(AudioStream *oboeStream, void *audioData, int32_t numFrames) override;
 
-    private:
+private:
     AAssetManager *mAssetManager{nullptr};
     AudioStream *mAudioStream{nullptr};
     SoundRecording *mClap{nullptr};
     Mixer mMixer;
+    bool mIsExclusive = false;
+    int64_t mBufferCapacityInFrames = 0;
 };
 
 
