@@ -1,7 +1,7 @@
 ext {
     // Sdk and tools
     min_sdk_version = 21
-    target_sdk_version = 27
+    target_sdk_version = 28
     compile_sdk_version = 'android-P'
 }
 

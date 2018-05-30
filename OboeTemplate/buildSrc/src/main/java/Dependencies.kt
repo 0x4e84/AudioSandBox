@@ -1,11 +1,11 @@
 object Versions {
-    const val gradle_tools = "3.2.0-alpha15"
+    const val gradle_tools = "3.2.0-alpha16"
     const val kotlin = "1.2.41"
 
     const val azure_mobile = "2.0.3"
     const val azure_storage = "0.7.0"
     const val constraint_layout = "1.1.0"
-    const val crashlytics = "2.9.2@aar"
+    const val crashlytics = "2.9.3@aar"
     const val crashlytics_answers = "1.4.1@aar"
     const val espresso = "3.0.2"
     const val gson = "2.8.0"

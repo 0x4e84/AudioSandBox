@@ -1,7 +1,3 @@
-//
-// Created by 11vmeyer on 2018-05-20.
-//
-
 #include <thread>
 
 #include "OboeSound.h"
@@ -19,6 +15,7 @@ void OboeSound::start() {
 
     // Create a builder
     AudioStreamBuilder builder;
+    builder.setDirection(Direction::Output);
     builder.setFormat(AudioFormat::I16);
     builder.setChannelCount(2);
     builder.setSampleRate(kSampleRateHz);
@@ -30,6 +27,9 @@ void OboeSound::start() {
     if (result != Result::OK){
         LOGE("Failed to open stream. Error: %s", convertToText(result));
     }
+
+    mIsExclusive = mAudioStream->getSharingMode() == SharingMode::Exclusive;
+    mBufferCapacityInFrames = mAudioStream->getBufferCapacityInFrames();
 
     // Reduce stream latency by setting the buffer size to a multiple of the burst size
     mAudioStream->setBufferSizeInFrames(
@@ -45,6 +45,13 @@ void OboeSound::stop() {
     Result result = mAudioStream->requestStop();
     if (result != Result::OK){
         LOGE("Failed to stop stream. Error: %s", convertToText(result));
+    }
+}
+
+void OboeSound::close() {
+    Result result = mAudioStream->close();
+    if (result != Result::OK){
+        LOGE("Failed to close stream. Error: %s", convertToText(result));
     }
 }
 
@@ -72,6 +79,14 @@ DataCallbackResult
 OboeSound::onAudioReady(AudioStream *oboeStream, void *audioData, int32_t numFrames) {
     mMixer.renderAudio(static_cast<int16_t*>(audioData), numFrames);
     return DataCallbackResult::Continue;
+}
+
+bool OboeSound::isExclusive() {
+    return mIsExclusive;
+}
+
+int64_t OboeSound::getBufferSizeInFrames() {
+    return mBufferCapacityInFrames;
 }
 
 
