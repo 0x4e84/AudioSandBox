@@ -1,0 +1,42 @@
+object Versions {
+    const val gradle_tools = "3.2.0-alpha16"
+    const val kotlin = "1.2.41"
+
+    const val azure_mobile = "2.0.3"
+    const val azure_storage = "0.7.0"
+    const val constraint_layout = "1.1.0"
+    const val crashlytics = "2.9.3@aar"
+    const val crashlytics_answers = "1.4.1@aar"
+    const val espresso = "3.0.2"
+    const val gson = "2.8.0"
+    const val hamcrest = "1.3"
+    const val jetbrains_annotations = "15.0"
+    const val junit = "4.12"
+    const val support_test = "1.0.2"
+    const val support = "27.1.1"
+}
+
+object Libs {
+    const val gradle_build_tools = "com.android.tools.build:gradle:${Versions.gradle_tools}"
+    const val test_runner = "android.support.test.runner.AndroidJUnitRunner"
+
+    const val azure_mobile = "com.microsoft.azure:azure-mobile-services-android-sdk:${Versions.azure_mobile}"
+    const val azure_storage = "com.microsoft.azure.android:azure-storage-android:${Versions.azure_storage}"
+    const val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
+    const val crahslytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"
+    const val crahslytics_answers = "com.crashlytics.sdk.android:answers:${Versions.crashlytics_answers}"
+    const val espresso = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
+    const val gson = "com.google.code.gson:gson:${Versions.gson}"
+    const val hamcrest = "org.hamcrest:hamcrest-library:${Versions.hamcrest}"
+    const val jetbrains_annotations = "org.jetbrains:annotations-java5:${Versions.jetbrains_annotations}"
+    const val junit = "junit:junit:${Versions.junit}"
+    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    const val kotlin_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val support_annotations = "com.android.support:support-annotations:${Versions.support}"
+    const val support_appcompat_v7 = "com.android.support:appcompat-v7:${Versions.support}"
+    const val support_design = "com.android.support:design:${Versions.support}"
+    const val support_preference_v7 = "com.android.support:preference-v7:${Versions.support}"
+    const val support_preference_v14 = "com.android.support:preference-v14:${Versions.support}"
+    const val support_test_rules = "com.android.support.test:rules:${Versions.support_test}"
+    const val support_test_runner = "com.android.support.test:runner:${Versions.support_test}"
+}

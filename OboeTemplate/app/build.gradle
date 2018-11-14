@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        applicationId "com.gmail.meeyeer.viinceent.oboetemplate"
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner Libs.test_runner
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++14"
+
+                // Instruction Set Architecture:
+                // armeabi-v7a: Nexus 5
+                // arm64-v8a: Pixel 2, Nexus 5X, Nokia 6, Sony XPeria Z5 Compact
+                abiFilters "armeabi-v7a", "arm64-v8a"
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation Libs.support_appcompat_v7
+    implementation Libs.constraint_layout
+
+    testImplementation Libs.junit
+
+    androidTestImplementation Libs.junit
+    androidTestImplementation Libs.hamcrest
+    androidTestImplementation Libs.support_test_runner
+}

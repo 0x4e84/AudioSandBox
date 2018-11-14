@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OboeTemplate</string>
+    <string name="opengl_surface_view_button">OpenGL Surface View</string>
+    <string name="refresh_button">Refresh</string>
+    <string name="stream_in_button">Stream in</string>
+    <string name="need_record_audio_permission">"This sample needs RECORD_AUDIO permission"</string>
+    <string name="status_record_audio_denied">Error: Permission for RECORD_AUDIO was denied</string>
+</resources>
