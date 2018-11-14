@@ -10,8 +10,9 @@
               pluginCode="Gf2g" pluginChannelConfigs="" pluginIsSynth="1" pluginWantsMidiIn="1"
               pluginProducesMidiOut="0" pluginIsMidiEffectPlugin="0" pluginEditorRequiresKeys="1"
               pluginAUExportPrefix="DSPWorkshopADC2017AU" pluginRTASCategory=""
-              aaxIdentifier="com.roli.DSPWorkshopADC2017" pluginAAXCategory="AAX_ePlugInCategory_Dynamics"
-              jucerVersion="5.2.0" companyCopyright="">
+              aaxIdentifier="com.roli.DSPWorkshopADC2017" pluginAAXCategory="2"
+              jucerVersion="5.4.1" companyCopyright="" pluginFormats="buildVST,buildAU,buildStandalone"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn,pluginEditorRequiresKeys">
   <MAINGROUP id="XYkinT" name="DSPWorkshopADC2017">
     <GROUP id="{D7CE6EEB-E88A-F1CD-4669-A5A1166ACAA3}" name="Shared">
       <FILE id="hM6AXa" name="AudioBufferQueue.h" compile="0" resource="0"
@@ -114,4 +115,7 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_QUICKTIME="disabled"/>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>
