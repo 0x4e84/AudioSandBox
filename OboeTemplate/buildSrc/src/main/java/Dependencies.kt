@@ -1,42 +1,52 @@
 object Versions {
-    const val gradle_tools = "3.2.0-alpha16"
-    const val kotlin = "1.2.41"
+    const val gradle_tools            = "3.4.0-alpha03"  // https://mvnrepository.com/artifact/com.android.tools.build/gradle
 
-    const val azure_mobile = "2.0.3"
-    const val azure_storage = "0.7.0"
-    const val constraint_layout = "1.1.0"
-    const val crashlytics = "2.9.3@aar"
-    const val crashlytics_answers = "1.4.1@aar"
-    const val espresso = "3.0.2"
-    const val gson = "2.8.0"
-    const val hamcrest = "1.3"
-    const val jetbrains_annotations = "15.0"
-    const val junit = "4.12"
-    const val support_test = "1.0.2"
-    const val support = "27.1.1"
+    // Android Support
+    const val support                 = "28.0.0"         // https://mvnrepository.com/artifact/com.android.support
+    const val support_constraint      = "2.0.0-alpha2"   // https://mvnrepository.com/artifact/com.android.support.constraint
+    const val support_multidex        = "1.0.3"          // https://mvnrepository.com/artifact/com.android.support
+    const val support_test            = "1.0.2"          // https://mvnrepository.com/artifact/com.android.support.test
+    const val support_test_espresso   = "3.0.2-alpha1"   // https://mvnrepository.com/artifact/com.android.support.test.espresso
+
+    // Google
+    const val gson                    = "2.8.5"          // https://mvnrepository.com/artifact/com.google.code.gson
+    const val gms_play_services       = "12.0.0"         // https://mvnrepository.com/artifact/com.google.android.gms
+
+    // Jetbrains
+    const val jetbrains_annotations   = "16.0.3"         // https://mvnrepository.com/artifact/org.jetbrains/annotations-java5
+    const val kotlin                  = "1.3.0"          // https://mvnrepository.com/artifact/org.jetbrains.kotlin
+
+    // Others
+    const val crashlytics             = "2.9.6"          // https://mvnrepository.com/artifact/com.crashlytics.sdk.android/crashlytics
+    const val crashlytics_answers     = "1.4.3"          // https://mvnrepository.com/artifact/com.crashlytics.sdk.android/answers
+    const val junit                   = "4.12"           // https://mvnrepository.com/artifact/junit/junit
+    const val junit_jupiter_api       = "5.3.1"          // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
 }
 
 object Libs {
-    const val gradle_build_tools = "com.android.tools.build:gradle:${Versions.gradle_tools}"
-    const val test_runner = "android.support.test.runner.AndroidJUnitRunner"
+    const val gradle_build_tools      = "com.android.tools.build:gradle:${Versions.gradle_tools}"
+    const val junit_runner            = "android.support.test.runner.AndroidJUnitRunner"
 
-    const val azure_mobile = "com.microsoft.azure:azure-mobile-services-android-sdk:${Versions.azure_mobile}"
-    const val azure_storage = "com.microsoft.azure.android:azure-storage-android:${Versions.azure_storage}"
-    const val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
-    const val crahslytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"
-    const val crahslytics_answers = "com.crashlytics.sdk.android:answers:${Versions.crashlytics_answers}"
-    const val espresso = "com.android.support.test.espresso:espresso-core:${Versions.espresso}"
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
-    const val hamcrest = "org.hamcrest:hamcrest-library:${Versions.hamcrest}"
-    const val jetbrains_annotations = "org.jetbrains:annotations-java5:${Versions.jetbrains_annotations}"
-    const val junit = "junit:junit:${Versions.junit}"
-    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-    const val kotlin_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val support_annotations = "com.android.support:support-annotations:${Versions.support}"
-    const val support_appcompat_v7 = "com.android.support:appcompat-v7:${Versions.support}"
-    const val support_design = "com.android.support:design:${Versions.support}"
-    const val support_preference_v7 = "com.android.support:preference-v7:${Versions.support}"
-    const val support_preference_v14 = "com.android.support:preference-v14:${Versions.support}"
-    const val support_test_rules = "com.android.support.test:rules:${Versions.support_test}"
-    const val support_test_runner = "com.android.support.test:runner:${Versions.support_test}"
+    // Android Support
+    const val constraint_layout       = "com.android.support.constraint:constraint-layout:${Versions.support_constraint}"
+    const val support_appcompat_v7    = "com.android.support:appcompat-v7:${Versions.support}"
+    const val support_design          = "com.android.support:design:${Versions.support}"
+    const val support_espresso        = "com.android.support.test.espresso:espresso-core:${Versions.support_test_espresso}"
+    const val support_multidex        = "com.android.support:multidex:${Versions.support_multidex}"
+    const val support_test_rules      = "com.android.support.test:rules:${Versions.support_test}"
+    const val support_test_runner     = "com.android.support.test:runner:${Versions.support_test}"
+
+    // Google
+    const val gson                    = "com.google.code.gson:gson:${Versions.gson}"
+    const val play_services           = "com.google.android.gms:play-services:${Versions.gms_play_services}"
+
+    // Jetbrains
+    const val jetbrains_annotations   = "org.jetbrains:annotations-java5:${Versions.jetbrains_annotations}"
+    const val kotlin_plugin           = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+
+    // Others
+    const val crahslytics             = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"
+    const val crahslytics_answers     = "com.crashlytics.sdk.android:answers:${Versions.crashlytics_answers}"
+    const val junit                   = "junit:junit:${Versions.junit}"
+    const val junit_jupiter_api       = "org.junit.jupiter:junit-jupiter-api:${Versions.junit_jupiter_api}"
 }

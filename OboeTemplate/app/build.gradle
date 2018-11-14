@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner Libs.test_runner
+        testInstrumentationRunner Libs.junit_runner
 
         externalNativeBuild {
             cmake {
@@ -53,6 +53,5 @@ dependencies {
     testImplementation Libs.junit
 
     androidTestImplementation Libs.junit
-    androidTestImplementation Libs.hamcrest
     androidTestImplementation Libs.support_test_runner
 }
