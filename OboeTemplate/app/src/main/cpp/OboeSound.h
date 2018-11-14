@@ -22,6 +22,10 @@ public:
     void tap(int64_t eventTimeAsUptime);
     bool isExclusive();
     int64_t getBufferSizeInFrames();
+    void setPosition(int x, int y);
+    void startOscillator();
+    void stopOscillator();
+    double getFrequency();
 
     // Inherited from oboe::AudioStreamCallback
     DataCallbackResult
@@ -34,6 +38,9 @@ private:
     Mixer mMixer;
     bool mIsExclusive = false;
     int64_t mBufferCapacityInFrames = 0;
+
+    double phase = 0.0;
+    double frequency = 0.0;
 };
 
 

@@ -9,6 +9,9 @@ import android.view.SurfaceHolder;
 public class OpenGLSurfaceView extends GLSurfaceView {
 
     public static native void native_onTouchInput(int eventType, long timeSinceBootMs, int pixel_x, int pixel_y);
+    public static native void native_onTouchDown(int eventType, long timeSinceBootMs, int pixel_x, int pixel_y);
+    public static native void native_onTouchMove(int eventType, long timeSinceBootMs, int pixel_x, int pixel_y);
+    public static native void native_onTouchUp(int eventType, long timeSinceBootMs, int pixel_x, int pixel_y);
     public static native void native_surfaceDestroyed();
     private final RendererWrapper renderer;
 
@@ -40,7 +43,14 @@ public class OpenGLSurfaceView extends GLSurfaceView {
         // and other input controls. In our case we care about DOWN events.
         switch (e.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                native_onTouchInput(0, e.getEventTime(), (int)e.getX(), (int)e.getY());
+//                native_onTouchInput(0, e.getEventTime(), (int)e.getX(), (int)e.getY());
+                native_onTouchDown(0, e.getEventTime(), (int)e.getX(), (int)e.getY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                native_onTouchMove(0, e.getEventTime(), (int)e.getX(), (int)e.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                native_onTouchUp(0, e.getEventTime(), (int)e.getX(), (int)e.getY());
                 break;
         }
         return true;

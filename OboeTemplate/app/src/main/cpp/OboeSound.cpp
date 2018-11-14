@@ -89,5 +89,21 @@ int64_t OboeSound::getBufferSizeInFrames() {
     return mBufferCapacityInFrames;
 }
 
+void OboeSound::setPosition(int x, int y) {
+    frequency = x * 10.0;
+}
+
+void OboeSound::startOscillator() {
+
+}
+
+void OboeSound::stopOscillator() {
+
+}
+
+double OboeSound::getFrequency() {
+    return frequency;
+}
+
 
 
