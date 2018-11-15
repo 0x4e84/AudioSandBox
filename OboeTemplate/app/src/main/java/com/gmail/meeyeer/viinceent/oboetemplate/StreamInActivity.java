@@ -126,10 +126,8 @@ public class StreamInActivity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_refresh:
-                refreshDevices();
-                break;
+        if (view.getId() == R.id.button_refresh) {
+            refreshDevices();
         }
     }
 
@@ -146,32 +144,57 @@ public class StreamInActivity extends AppCompatActivity
                 isFirstSourceFound = true;
             }
             builder
-                    .append(String.format("%s device: Type = %s\n",
-                            device.isSource() ? "Input" : "Output",
-                            Utils.getTypeAsString(device)))
-                    .append(String.format("  ProductName = %s\n",
-                            device.getProductName()))
-                    .append(String.format("  Address %s\n",
-                            device.getAddress()))
-                    .append(String.format("  Id %s\n",
-                            device.getId()));
-            if (device.getSampleRates().length > 0) {
+                    .append(device.isSource() ? "Input" : "Output")
+                    .append(" device: ")
+                    .append(device.getProductName())
+                    .append(" (")
+                    .append(Utils.getTypeAsString(device))
+                    .append(", id: ")
+                    .append(device.getId())
+                    .append(")\n");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && !device.getAddress().isEmpty()) {
+                builder.append("  Location: ")
+                        .append(device.getAddress())
+                        .append("\n");
+            }
+
+            final int[] sampleRates = device.getSampleRates();
+            if (sampleRates.length > 0) {
                 builder.append("  sampleRates: ")
-                    .append(Arrays.toString(device.getSampleRates()))
+                    .append(Arrays.toString(sampleRates))
                     .append("\n");
             }
-            builder.append("  encodings: ")
-                    .append(TextUtils.join(", ", Utils.getEncodingsAsStrings(device)))
-                    .append("\n")
-                    .append("  channelCount: ")
-                    .append(Arrays.toString(device.getChannelCounts()))
-                    .append("\n")
-                    .append("  channelMask: ")
-                    .append(TextUtils.join(", ", Utils.getChannelMasksAsStrings(device)))
-                    .append("\n")
-                    .append("  channelIndexMask: ")
-                    .append(Arrays.toString(device.getChannelIndexMasks()))
-                    .append("\n\n");
+
+            final List<String> encodingsAsStrings = Utils.getEncodingsAsStrings(device);
+            if (!encodingsAsStrings.isEmpty()) {
+                builder.append("  encodings: ")
+                        .append(TextUtils.join(", ", encodingsAsStrings))
+                        .append("\n");
+            }
+
+            final int[] channelCounts = device.getChannelCounts();
+            if (channelCounts.length > 0) {
+                builder.append("  channelCount: ")
+                        .append(Arrays.toString(channelCounts))
+                        .append("\n");
+            }
+
+            final List<String> channelMasksAsStrings = Utils.getChannelMasksAsStrings(device);
+            if (!channelMasksAsStrings.isEmpty()) {
+                builder.append("  channelMask: ")
+                        .append(TextUtils.join(", ", channelMasksAsStrings))
+                        .append("\n");
+            }
+
+            final int[] channelIndexMasks = device.getChannelIndexMasks();
+            if (channelCounts.length > 0) {
+                builder.append("  channelIndexMask: ")
+                        .append(Arrays.toString(channelIndexMasks))
+                        .append("\n");
+            }
+
+            builder.append("\n");
         }
         devicesText.setText(builder.toString());
     }

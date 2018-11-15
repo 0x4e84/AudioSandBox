@@ -33,6 +33,38 @@ Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLSurfaceView_native_1onTouchI
 }
 
 JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLSurfaceView_native_1onTouchDown(JNIEnv *env,
+                                                                                    jclass type,
+                                                                                    jint eventType,
+                                                                                    jlong timeSinceBootMs,
+                                                                                    jint pixel_x,
+                                                                                    jint pixel_y) {
+    oboeSound->tap(timeSinceBootMs);
+    oboeSound->setPosition(pixel_x, pixel_y);
+    oboeSound->startOscillator();
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLSurfaceView_native_1onTouchMove(JNIEnv *env,
+                                                                                    jclass type,
+                                                                                    jint eventType,
+                                                                                    jlong timeSinceBootMs,
+                                                                                    jint pixel_x,
+                                                                                    jint pixel_y) {
+    oboeSound->setPosition(pixel_x, pixel_y);
+}
+
+JNIEXPORT void JNICALL
+Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLSurfaceView_native_1onTouchUp(JNIEnv *env,
+                                                                                  jclass type,
+                                                                                  jint eventType,
+                                                                                  jlong timeSinceBootMs,
+                                                                                  jint pixel_x,
+                                                                                  jint pixel_y) {
+    oboeSound->stopOscillator();
+}
+
+JNIEXPORT void JNICALL
 Java_com_gmail_meeyeer_viinceent_oboetemplate_OpenGLSurfaceView_native_1surfaceDestroyed(
         JNIEnv *env, jclass type) {
 
