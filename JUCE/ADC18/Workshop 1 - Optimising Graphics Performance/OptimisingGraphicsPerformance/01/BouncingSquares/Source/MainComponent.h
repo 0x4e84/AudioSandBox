@@ -63,7 +63,12 @@ private:
         }
 
         // Tell the OS to redraw the component
-        repaint();
+        Rectangle<float> dirtyArea(square);
+        square += velocity;
+        dirtyArea = dirtyArea.getUnion(square);
+
+        //repaint();
+        repaint(dirtyArea.getSmallestIntegerContainer());
     }
 
     //==============================================================================
