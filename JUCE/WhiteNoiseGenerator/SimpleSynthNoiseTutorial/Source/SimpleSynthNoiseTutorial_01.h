@@ -48,7 +48,7 @@
 #pragma once
 
 //==============================================================================
-class MainContentComponent   : public AudioAppComponent
+class MainContentComponent : public AudioAppComponent
 {
 public:
     MainContentComponent()
@@ -103,10 +103,12 @@ public:
             auto levelIncrement = (targetLevel - currentLevel) / samplesToTarget;
             auto numSamplesThisTime = jmin(numSamplesRemaining, samplesToTarget);
 
+            // We loop over samples and then over the channels to calculate each level only once
             for (auto sample = 0; sample < numSamplesThisTime; ++sample)
             {
                 for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
                     bufferToFill.buffer->setSample(channel, sample, random.nextFloat() * currentLevel);
+                // Are we centered around 0??
 
                 currentLevel += levelIncrement;
                 --samplesToTarget;
@@ -121,6 +123,7 @@ public:
 
         if (numSamplesRemaining > 0)
         {
+            // Here the level remains constant, so we can access the buffer samples through a pointer, which is more efficient
             for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
             {
                 auto* buffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample + offset);
