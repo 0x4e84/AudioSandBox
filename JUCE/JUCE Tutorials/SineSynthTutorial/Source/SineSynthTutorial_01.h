@@ -47,6 +47,30 @@
 
 #pragma once
 
+class DecibelSlider : public Slider
+{
+public:
+    DecibelSlider() {}
+
+    double getValueFromText(const String& text) override
+    {
+        auto minusInfinitydB = -100.0;
+
+        auto decibelText = text.upToFirstOccurrenceOf("dB", false, false).trim();    // [1]
+
+        return decibelText.equalsIgnoreCase("-INF") ? minusInfinitydB
+            : decibelText.getDoubleValue();  // [2]
+    }
+
+    String getTextFromValue(double value) override
+    {
+        return Decibels::toString(value);
+    }
+
+private:
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DecibelSlider)
+};
+
 //==============================================================================
 class MainContentComponent : public AudioAppComponent
 {
@@ -63,10 +87,14 @@ public:
                 updateAngleDelta();
         };
 
-        addAndMakeVisible(levelSlider);
-        levelSlider.setRange(0.0, 0.125);
-        levelSlider.setValue((double)currentLevel, dontSendNotification);
-        levelSlider.onValueChange = [this] { targetLevel = (float)levelSlider.getValue(); };
+        addAndMakeVisible(dBLevelSlider);
+        dBLevelSlider.setRange(-100, -12);
+        dBLevelSlider.setTextBoxStyle(Slider::TextBoxRight, false, 100, 20);
+        dBLevelSlider.setValue((double)Decibels::gainToDecibels(currentLevel), dontSendNotification);
+        dBLevelSlider.onValueChange = [this] 
+        { 
+            targetLevel = Decibels::decibelsToGain((float)dBLevelSlider.getValue()); 
+        };
 
         setSize (600, 100);
         setAudioChannels (0, 2); // no inputs, two outputs
@@ -80,7 +108,7 @@ public:
     void resized() override
     {
         frequencySlider.setBounds (10, 10, getWidth() - 20, 20);
-        levelSlider.setBounds(10, 40, getWidth() - 20, 20);
+        dBLevelSlider.setBounds(10, 40, getWidth() - 20, 20);
     }
 
     void updateAngleDelta()
@@ -139,9 +167,11 @@ public:
 
 private:
     Slider frequencySlider;
-    Slider levelSlider;
+    DecibelSlider dBLevelSlider;
+    Label decibelLabel;
     double currentSampleRate = 0.0, currentAngle = 0.0, angleDelta = 0.0; // [1]
     double currentFrequency = 500.0, targetFrequency = 500.0; // [5]
+    float currentDbLevel = 0.0f;
     float currentLevel = 0.1f, targetLevel = 0.1f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
