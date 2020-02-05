@@ -2,7 +2,7 @@
 
 <JUCERPROJECT name="SimpleSynthNoiseTutorial" companyName="JUCE" version="1.0.0"
               userNotes="Simple noise synthesiser." companyWebsite="http://juce.com"
-              defines="" projectType="guiapp" id="oWuxKN" jucerVersion="5.4.5">
+              defines="" projectType="guiapp" id="oWuxKN" jucerVersion="5.4.6">
   <MAINGROUP id="wJQOxN" name="SimpleSynthNoiseTutorial">
     <GROUP id="{AC1B06AD-089E-B249-91DC-144A32375666}" name="Source">
       <FILE id="DYblQK" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
