@@ -56,11 +56,17 @@ public:
         addAndMakeVisible (frequencySlider);
         frequencySlider.setRange (50.0, 5000.0);
         frequencySlider.setSkewFactorFromMidPoint (500.0); // [4]
+        frequencySlider.setValue(currentFrequency, dontSendNotification);  // [6]
         frequencySlider.onValueChange = [this]
         {
             if (currentSampleRate > 0.0)
                 updateAngleDelta();
         };
+
+        addAndMakeVisible(levelSlider);
+        levelSlider.setRange(0.0, 0.125);
+        levelSlider.setValue((double)currentLevel, dontSendNotification);
+        levelSlider.onValueChange = [this] { targetLevel = (float)levelSlider.getValue(); };
 
         setSize (600, 100);
         setAudioChannels (0, 2); // no inputs, two outputs
@@ -74,6 +80,7 @@ public:
     void resized() override
     {
         frequencySlider.setBounds (10, 10, getWidth() - 20, 20);
+        levelSlider.setBounds(10, 40, getWidth() - 20, 20);
     }
 
     void updateAngleDelta()
@@ -96,18 +103,46 @@ public:
         auto* leftBuffer  = bufferToFill.buffer->getWritePointer (0, bufferToFill.startSample);
         auto* rightBuffer = bufferToFill.buffer->getWritePointer (1, bufferToFill.startSample);
 
-        for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+        auto localTargetFrequency = targetFrequency;
+
+        if (localTargetFrequency != currentFrequency)                                                         // [7]
         {
-            auto currentSample = (float) std::sin (currentAngle);
-            currentAngle += angleDelta;
-            leftBuffer[sample]  = currentSample * level;
-            rightBuffer[sample] = currentSample * level;
+            auto frequencyIncrement = (localTargetFrequency - currentFrequency) / bufferToFill.numSamples;    // [8]
+
+            for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+            {
+                auto currentSample = (float)std::sin(currentAngle);
+                currentFrequency += frequencyIncrement;                                                       // [9]
+                updateAngleDelta();                                                                           // [10]
+                currentAngle += angleDelta;
+                leftBuffer[sample] = currentSample * level;
+                rightBuffer[sample] = currentSample * level;
+            }
+
+            currentFrequency = localTargetFrequency;
         }
+        else                                                                                                  // [11]
+        {
+            for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+            {
+                auto currentSample = (float)std::sin(currentAngle);
+                currentAngle += angleDelta;
+                leftBuffer[sample] = currentSample * level;
+                rightBuffer[sample] = currentSample * level;
+            }
+        }
+
+        auto localTargetLevel = targetLevel;
+        bufferToFill.buffer->applyGainRamp(bufferToFill.startSample, bufferToFill.numSamples, currentLevel, localTargetLevel);
+        currentLevel = localTargetLevel;
     }
 
 private:
     Slider frequencySlider;
+    Slider levelSlider;
     double currentSampleRate = 0.0, currentAngle = 0.0, angleDelta = 0.0; // [1]
+    double currentFrequency = 500.0, targetFrequency = 500.0; // [5]
+    float currentLevel = 0.1f, targetLevel = 0.1f;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)
 };
