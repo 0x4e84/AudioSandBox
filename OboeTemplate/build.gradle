@@ -1,14 +1,15 @@
 ext {
     // Sdk and tools
     min_sdk_version = 21
-    target_sdk_version = 28
-    compile_sdk_version = 28
+    target_sdk_version = 33
+    compile_sdk_version = 33
 }
 
 buildscript {
+    ext.kotlin_version = '1.8.20'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath Libs.gradle_build_tools
@@ -19,7 +20,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
